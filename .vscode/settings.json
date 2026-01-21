@@ -1,0 +1,19 @@
+{
+  "nix.enableLanguageServer": true,
+  "nix.serverPath": "nil",
+  "nix.serverSettings": {
+    "nil": {
+      "formatting": {
+        "command": [
+          "npx",
+          "-y",
+          "prettier-plugin-nix",
+          "--stdin-filepath",
+          "${input}"
+        ]
+      }
+    }
+  },
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true
+}
