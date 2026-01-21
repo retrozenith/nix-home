@@ -11,6 +11,7 @@
 
     # Hardware configuration
     ./hardware-configuration.nix
+    ./disks.nix
   ];
 
   nix.settings.trusted-users = [ "cvictor" ];
