@@ -11,13 +11,20 @@
   ];
 
   nix.settings.extra-experimental-features = [ "nix-command" "flakes" ];
+  nix.settings.trusted-users = [ "cvictor" ];
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
   networking.hostName = "andromeda";
 
-  networking.networkmanager.enable = true;
+  networking.networkmanager.enable = false;
+  networking.interfaces.enp1s0.ipv4.addresses = [{
+    address = "192.168.0.26";
+    prefixLength = 24;
+  }];
+  networking.defaultGateway = "192.168.0.1";
+  networking.nameservers = [ "1.1.1.1" "8.8.8.8" ];
 
   time.timeZone = "Europe/Bucharest";
 
