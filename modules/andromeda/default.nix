@@ -8,5 +8,6 @@
     ./services/smb.nix
     ./services/arr.nix
     ./services/jellyfin.nix
+    ./services/monitoring.nix
   ];
 }
