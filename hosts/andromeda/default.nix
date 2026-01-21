@@ -9,6 +9,9 @@
     # Common modules
     ../../modules/default.nix
 
+    # Specific modules
+    ../../modules/andromeda/default.nix
+
     # Hardware configuration
     ./hardware-configuration.nix
     ./disks.nix
