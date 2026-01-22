@@ -17,6 +17,7 @@
         owner = "vaultwarden";
         group = "vaultwarden";
       };
+      gluetun-env.file = ../../secrets/gluetun-env.age;
     };
   };
 }

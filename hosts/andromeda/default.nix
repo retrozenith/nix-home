@@ -44,5 +44,8 @@
   networking.firewall.allowedTCPPorts = [ 22 ];
   networking.firewall.allowedUDPPorts = [ 22 ];
 
+  # Enable Docker
+  virtualisation.docker.enable = true;
+
   system.stateVersion = "25.11";
 }
