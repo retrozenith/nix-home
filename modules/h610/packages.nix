@@ -6,6 +6,10 @@
     pinentry-qt
     nil
     direnv
+    wgnord
+    wireguard-tools
+    python3
+    python3Packages.pip
   ];
 
   programs.gnupg.agent = {
