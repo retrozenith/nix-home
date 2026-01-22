@@ -39,11 +39,11 @@
   };
     
   # -------------------------------------------------------------------------- #
-  # qBittorrent + Gluetun VPN + Profilarr
+  # qBittorrent + Gluetun VPN + Profilarr + Streamystats
   # -------------------------------------------------------------------------- #
 
-  # Open firewall for qBittorrent web UI and Profilarr web UI
-  networking.firewall.allowedTCPPorts = [ 8080 6868 ];
+  # Open firewall for qBittorrent web UI, Profilarr web UI and Streamystats web UI
+  networking.firewall.allowedTCPPorts = [ 8080 6868 3001 ];
 
   # OCI Containers (Docker)
   virtualisation.oci-containers = {
@@ -93,6 +93,22 @@
         ];
         ports = [ "6868:6868" ];
       };
+
+      streamystats = {
+        image = "fredrikburmester/streamystats-v2-aio:latest";
+        environment = {
+          POSTGRES_USER = "postgres";
+          POSTGRES_DB = "streamystats";
+          # POSTGRES_PASSWORD and SESSION_SECRET loaded from env file
+          NODE_ENV = "production";
+          SKIP_STARTUP_FULL_SYNC = "false";
+        };
+        environmentFiles = [ config.age.secrets.streamystats-env.path ];
+        volumes = [
+          "/var/lib/streamystats:/var/lib/postgresql/data"
+        ];
+        ports = [ "3001:3000" ]; # Port mapped to 3001 to distinguish from Grafana
+      };
     };
   };
 
@@ -101,5 +117,6 @@
     "d /var/lib/gluetun 0755 root root -"
     "d /var/lib/qbittorrent 0755 1000 2000 -"
     "d /var/lib/profilarr 0755 1000 2000 -"
+    "d /var/lib/streamystats 0755 1000 2000 -"
   ];
 }

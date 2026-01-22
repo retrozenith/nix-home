@@ -117,6 +117,24 @@
       }
     '';
   };
+
+  services.caddy.virtualHosts."streamys.{$DOMAIN}" = {
+    extraConfig = ''
+      import security_headers
+      reverse_proxy http://localhost:3001
+      tls {
+        dns cloudflare {env.CLOUDFLARE_API_TOKEN}
+      }
+      log {
+        output file /var/log/caddy/streamystats.log {
+          roll_size 100MiB
+          roll_keep 5
+          roll_keep_for 100d
+        }
+        format json
+      }
+    '';
+  };
   
   networking.firewall.allowedTCPPorts = [ 80 443 ];
   networking.firewall.allowedUDPPorts = [ 443 ]; # HTTP/3 support

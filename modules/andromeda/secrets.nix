@@ -18,6 +18,7 @@
         group = "vaultwarden";
       };
       gluetun-env.file = ../../secrets/gluetun-env.age;
+      streamystats-env.file = ../../secrets/streamystats-env.age;
     };
   };
 }
