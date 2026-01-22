@@ -2,17 +2,23 @@
 
 {
   environment.systemPackages = with pkgs; [
+
+    # Git
     git
     git-lfs
     github-cli
+
+    # Security
     gnupg
+    age
+
+    # System
     htop
     fastfetch
     nano
     wget
     curl
     jq
-    age
   ];
 
   programs.git = {
