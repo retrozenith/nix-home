@@ -8,7 +8,7 @@
   users.users.cvictor.extraGroups = [ "media-management" ];
 
   # -------------------------------------------------------------------------- #
-  # Sonarr + Radarr + Prowlarr
+  # Sonarr + Radarr + Prowlarr + Flarresolverr + Jellyseerr
   # -------------------------------------------------------------------------- #
 
   services.sonarr = {
@@ -28,12 +28,22 @@
     openFirewall = true;
   };
 
+  services.flaresolverr = {
+    enable = true;
+    openFirewall = true;
+  };
+
+  services.jellyseerr = {
+    enable = true;
+    openFirewall = true;
+  };
+    
   # -------------------------------------------------------------------------- #
-  # qBittorrent + Gluetun VPN
+  # qBittorrent + Gluetun VPN + Profilarr
   # -------------------------------------------------------------------------- #
 
-  # Open firewall for qBittorrent web UI
-  networking.firewall.allowedTCPPorts = [ 8080 ];
+  # Open firewall for qBittorrent web UI and Profilarr web UI
+  networking.firewall.allowedTCPPorts = [ 8080 6868 ];
 
   # OCI Containers (Docker)
   virtualisation.oci-containers = {
@@ -70,12 +80,26 @@
         ];
         extraOptions = [ "--network=container:gluetun" ];
       };
+
+      profilarr = {
+        image = "santiagosayshey/profilarr:latest";
+        environment = {
+          PUID = "1000";
+          PGID = "2000";
+          TZ = "Europe/Bucharest";
+        };
+        volumes = [
+          "/var/lib/profilarr:/config"
+        ];
+        ports = [ "6868:6868" ];
+      };
     };
   };
 
   # Ensure directories exist
   systemd.tmpfiles.rules = [
     "d /var/lib/gluetun 0755 root root -"
-    "d /var/lib/qbittorrent 0755 1000 1000 -"
+    "d /var/lib/qbittorrent 0755 1000 2000 -"
+    "d /var/lib/profilarr 0755 1000 2000 -"
   ];
 }
