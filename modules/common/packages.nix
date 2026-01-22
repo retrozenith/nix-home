@@ -10,6 +10,8 @@
     nano
     wget
     curl
+    jq
+    age
   ];
 
   programs.git = {

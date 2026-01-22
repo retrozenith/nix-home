@@ -1,0 +1,17 @@
+{ ... }:
+
+{
+  age = {
+    identityPaths = [ "/home/cvictor/.config/age/andromeda-key.txt" ];    
+    
+    secrets = {
+      cloudflare_api_token.file = ../../secrets/cloudflare_api_token.age;
+      cloudflare_api_email.file = ../../secrets/cloudflare_api_email.age;
+      domain = {
+        file = ../../secrets/domain.age;
+        owner = "caddy";
+        group = "caddy";
+      };
+    };
+  };
+}

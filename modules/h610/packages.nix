@@ -1,8 +1,8 @@
-{ pkgs, antigravity-nix, ... }:
+{ pkgs, ... }:
 
 {
   environment.systemPackages = with pkgs; [
-    antigravity-nix.packages.x86_64-linux.default
+    antigravity-fhs
     pinentry-qt
     nil
     direnv
