@@ -8,6 +8,11 @@
       hash = "sha256-dnhEjopeA0UiI+XVYHYpsjcEI6Y1Hacbi28hVKYQURg=";
     };
 
+    # Global options for metrics
+    globalConfig = ''
+      metrics
+    '';
+
     # Security headers snippet (defined at top level of Caddyfile)
     extraConfig = ''
       (security_headers) {
@@ -65,6 +70,14 @@
       tls {
         dns cloudflare {env.CLOUDFLARE_API_TOKEN}
       }
+      log {
+        output file /var/log/caddy/jf.log {
+          roll_size 100MiB
+          roll_keep 5
+          roll_keep_for 100d
+        }
+        format json
+      }
     '';
   };
 
@@ -74,6 +87,14 @@
       reverse_proxy http://localhost:3000
       tls {
         dns cloudflare {env.CLOUDFLARE_API_TOKEN}
+      }
+      log {
+        output file /var/log/caddy/monitoring.log {
+          roll_size 100MiB
+          roll_keep 5
+          roll_keep_for 100d
+        }
+        format json
       }
     '';
   };

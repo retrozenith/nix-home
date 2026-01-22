@@ -19,6 +19,14 @@
       tls {
         dns cloudflare {env.CLOUDFLARE_API_TOKEN}
       }
+      log {
+        output file /var/log/caddy/vault.log {
+          roll_size 100MiB
+          roll_keep 5
+          roll_keep_for 100d
+        }
+        format json
+      }
     '';
   };
 }
