@@ -10,6 +10,7 @@
 
     # Global options for metrics
     globalConfig = ''
+      default_bind 192.168.0.26
       metrics
     '';
 
