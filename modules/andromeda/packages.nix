@@ -5,5 +5,8 @@
 
     # System - GPU
     intel-gpu-tools
+
+    # System - Network
+    wireguard-tools
   ];
 }
