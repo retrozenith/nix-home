@@ -11,6 +11,7 @@
     ./services/monitoring.nix
     ./services/caddy.nix
     ./services/ddns.nix
+    ./services/vaultwarden.nix
     ./secrets.nix
   ];
 }

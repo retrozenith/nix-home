@@ -12,6 +12,11 @@
         owner = "caddy";
         group = "caddy";
       };
+      vaultwarden-env = {
+        file = ../../secrets/vaultwarden-env.age;
+        owner = "vaultwarden";
+        group = "vaultwarden";
+      };
     };
   };
 }

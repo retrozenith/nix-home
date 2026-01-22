@@ -6,4 +6,5 @@ in
   "cloudflare_api_token.age".publicKeys = [ andromeda h610 ];
   "cloudflare_api_email.age".publicKeys = [ andromeda h610 ];
   "domain.age".publicKeys = [ andromeda h610 ];
+  "vaultwarden-env.age".publicKeys = [ andromeda h610 ];
 }
