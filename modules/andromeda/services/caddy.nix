@@ -7,6 +7,20 @@
       plugins = [ "github.com/caddy-dns/cloudflare@v0.2.2" ]; 
       hash = "sha256-dnhEjopeA0UiI+XVYHYpsjcEI6Y1Hacbi28hVKYQURg=";
     };
+
+    # Security headers snippet (defined at top level of Caddyfile)
+    extraConfig = ''
+      (security_headers) {
+        header {
+          X-Content-Type-Options "nosniff"
+          X-Frame-Options "SAMEORIGIN"
+          X-XSS-Protection "1; mode=block"
+          Referrer-Policy "strict-origin-when-cross-origin"
+          Strict-Transport-Security "max-age=31536000; includeSubDomains"
+          -Server
+        }
+      }
+    '';
   };
   
   systemd.services.caddy.serviceConfig.EnvironmentFile = [ "/run/caddy-env" ];
@@ -27,25 +41,16 @@
         if [[ -f ${config.age.secrets.domain.path} ]] && [[ -f ${config.age.secrets.cloudflare_api_token.path} ]]; then
           break
         fi
-        echo "Waiting for secrets... ($i)"
         sleep 1
       done
 
-      # Read secrets
+      # Read secrets and create env file
       DOMAIN=$(cat ${config.age.secrets.domain.path})
       CF_TOKEN=$(cat ${config.age.secrets.cloudflare_api_token.path})
       
-      # Debug output
-      echo "DOMAIN length: ''${#DOMAIN}"
-      echo "CF_TOKEN length: ''${#CF_TOKEN}"
-      
-      # Create env file
       echo "DOMAIN=$DOMAIN" > /run/caddy-env
       echo "CLOUDFLARE_API_TOKEN=$CF_TOKEN" >> /run/caddy-env
       chmod 600 /run/caddy-env
-      
-      echo "Created /run/caddy-env"
-      cat /run/caddy-env | head -c 50
     '';
   };
 
@@ -55,6 +60,7 @@
 
   services.caddy.virtualHosts."jf.{$DOMAIN}" = {
     extraConfig = ''
+      import security_headers
       reverse_proxy http://localhost:8096
       tls {
         dns cloudflare {env.CLOUDFLARE_API_TOKEN}
@@ -64,6 +70,7 @@
 
   services.caddy.virtualHosts."monitoring.{$DOMAIN}" = {
     extraConfig = ''
+      import security_headers
       reverse_proxy http://localhost:3000
       tls {
         dns cloudflare {env.CLOUDFLARE_API_TOKEN}
@@ -72,4 +79,5 @@
   };
   
   networking.firewall.allowedTCPPorts = [ 80 443 ];
+  networking.firewall.allowedUDPPorts = [ 443 ]; # HTTP/3 support
 }
