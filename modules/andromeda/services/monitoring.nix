@@ -7,21 +7,81 @@
     openFirewall = true;
     # port 9100 by default
     enabledCollectors = [
+      # Standard collectors
+      "arp"
+      "bcache"
+      "bonding"
+      "btrfs"
+      "conntrack"
       "cpu"
+      "cpufreq"
       "diskstats"
+      "dmi"
+      "edac"
+      "entropy"
+      "fibrechannel"
+      "filefd"
       "filesystem"
+      "hwmon"
+      "infiniband"
+      "ipvs"
       "loadavg"
+      "mdadm"
       "meminfo"
+      "netclass"
       "netdev"
       "netstat"
+      "nfs"
+      "nfsd"
+      "nvme"
+      "powersupplyclass"
+      "pressure"
+      "rapl"
+      "schedstat"
+      "selinux"
+      "sockstat"
+      "softnet"
       "stat"
-      "time"
-      "vmstat"
-      "systemd"
-      "processes"
-      "hwmon"
+      "tapestats"
       "thermal_zone"
+      "time"
+      "timex"
+      "udp_queues"
+      "uname"
+      "vmstat"
+      "watchdog"
+      "xfs"
+      "zfs"
+
+      # Extra collectors
+      "buddyinfo"
+      "cgroups"
+      "cpu_vulnerabilities"
+      "drm"
+      "drbd"
+      "interrupts"
+      "ksmd"
+      "lnstat"
+      "logind"
+      "meminfo_numa"
+      "mountstats"
+      "network_route"
+      "pcidevice"
+      "processes"
+      "qdisc"
+      "slabinfo"
+      "softirqs"
+      "swap"
+      "systemd"
+      "wifi"
+      "zoneinfo"
     ];
+  };
+
+  # Run Node Exporter as root (required for privileged collectors)
+  systemd.services.prometheus-node-exporter.serviceConfig = {
+    User = "root";
+    DynamicUser = false;
   };
 
   # Prometheus - metrics collection
