@@ -18,6 +18,7 @@
       modules = [
         ./hosts/h610/default.nix
         home-manager.nixosModules.home-manager
+        agenix.nixosModules.default
         {
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;

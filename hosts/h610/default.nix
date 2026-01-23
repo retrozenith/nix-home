@@ -10,7 +10,7 @@
     ../../modules/default.nix
     
     # Specific modules
-    ../../modules/h610/packages.nix
+    ../../modules/h610/default.nix
 
     # Hardware configuration
     ./hardware-configuration.nix

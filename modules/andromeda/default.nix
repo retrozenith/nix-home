@@ -13,6 +13,7 @@
     ./services/ddns.nix
     ./services/ollama.nix
     ./services/vaultwarden.nix
+    ./services/tailscale.nix
     ./secrets.nix
   ];
 }

@@ -19,6 +19,7 @@
       };
       gluetun-env.file = ../../secrets/gluetun-env.age;
       streamystats-env.file = ../../secrets/streamystats-env.age;
+      tailscale-key.file = ../../secrets/tailscale-key.age;
     };
   };
 }
