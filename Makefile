@@ -10,7 +10,7 @@ REMOTE_USER := cvictor
 NIXOS_REBUILD := nixos-rebuild
 FLAKE := .
 
-.PHONY: all dry-run switch deploy edit-secret check update
+.PHONY: all dry-run switch deploy edit-secret gc gc-old gc-all optimize clean check update
 
 all: dry-run
 
@@ -26,7 +26,7 @@ switch:
 deploy:
 	sudo $(NIXOS_REBUILD) switch --flake $(FLAKE)#$(REMOTE_HOST) \
 		--target-host $(REMOTE_USER)@$(REMOTE_IP) \
-		--use-remote-sudo --ask-sudo-password
+		--sudo --ask-sudo-password
 
 # Edit a secret file (usage: make edit-secret [FILE=secret-name])
 edit-secret:
@@ -62,6 +62,25 @@ edit-secret:
 			exit 1; \
 		fi \
 	fi
+
+# Garbage collect - remove unreferenced store paths
+gc:
+	nix-collect-garbage
+
+# Garbage collect - delete generations older than 7 days
+gc-old:
+	sudo nix-collect-garbage --delete-older-than 7d
+
+# Aggressive garbage collection - delete all old generations
+gc-all:
+	sudo nix-collect-garbage -d
+
+# Optimize nix store (deduplicate)
+optimize:
+	sudo nix-store --optimise
+
+# Full cleanup: gc-all + optimize
+clean: gc-all optimize
 
 # Check flake integrity
 check:

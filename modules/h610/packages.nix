@@ -49,7 +49,23 @@
     gscan2pdf
     sane-backends
     sane-airscan
+
+    # Kwallet
+    kdePackages.ksshaskpass
+    kdePackages.kwallet-pam
+    kdePackages.kwalletmanager
+    kdePackages.kgpg
+
+    # Networking
+    nmap
   ];
+
+  # KWallet integration for SSH keys
+  environment.sessionVariables = {
+    SSH_ASKPASS = "${pkgs.kdePackages.ksshaskpass}/bin/ksshaskpass";
+    SSH_ASKPASS_REQUIRE = "prefer";
+    GIT_ASKPASS = "${pkgs.kdePackages.ksshaskpass}/bin/ksshaskpass";
+  };
 
   # Accept Android SDK license
   nixpkgs.config.android_sdk.accept_license = true;
@@ -58,6 +74,14 @@
     enable = true;
     enableSSHSupport = true;
     pinentryPackage = pkgs.pinentry-qt;
+    settings = {
+      default-cache-ttl = 86400;      # 24 hours
+      max-cache-ttl = 86400;          # 24 hours
+      default-cache-ttl-ssh = 86400;  # 24 hours for SSH keys
+      max-cache-ttl-ssh = 86400;      # 24 hours for SSH keys
+      allow-preset-passphrase = true;
+    };
+    enableExtraSocket = true;
   };
 
   services.printing = {
