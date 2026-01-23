@@ -12,7 +12,7 @@
       "cristeavictor.xyz"
       "*.cristeavictor.xyz"
     ];
-    use = "web, web=https://api.ipify.org";
+    usev4 = "webv4, webv4=https://api.ipify.org";
     interval = "5min";
   };
 }
