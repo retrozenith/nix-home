@@ -22,10 +22,21 @@
   networking.hostName = "andromeda";
 
   networking.networkmanager.enable = false;
-  networking.interfaces.enp1s0.ipv4.addresses = [{
-    address = "192.168.0.26";
-    prefixLength = 24;
-  }];
+  networking.bonds.bond0 = {
+    interfaces = [ "enp1s0" "eno1" ];
+    driverOptions.mode = "active-backup";
+  };
+
+  networking.interfaces.bond0 = {
+    macAddress = "74:da:38:9c:74:07";
+    ipv4.addresses = [{
+      address = "192.168.0.26";
+      prefixLength = 24;
+    }];
+  };
+
+  networking.interfaces.enp1s0.useDHCP = false;
+  networking.interfaces.eno1.useDHCP = false;
   networking.defaultGateway = "192.168.0.1";
   networking.nameservers = [ "1.1.1.1" "8.8.8.8" ];
 

@@ -26,7 +26,7 @@ switch:
 deploy:
 	sudo $(NIXOS_REBUILD) switch --flake $(FLAKE)#$(REMOTE_HOST) \
 		--target-host $(REMOTE_USER)@$(REMOTE_IP) \
-		--use-remote-sudo
+		--use-remote-sudo --ask-sudo-password
 
 # Edit a secret file (usage: make edit-secret [FILE=secret-name])
 edit-secret:
