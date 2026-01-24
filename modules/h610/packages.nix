@@ -58,6 +58,8 @@
 
     # Networking
     nmap
+
+    kdiskmark
   ];
 
   # KWallet integration for SSH keys

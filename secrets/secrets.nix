@@ -10,4 +10,5 @@ in
   "gluetun-env.age".publicKeys = [ andromeda h610 ];
   "streamystats-env.age".publicKeys = [ andromeda h610 ];
   "tailscale-key.age".publicKeys = [ andromeda h610 ];
+  "homepage-env.age".publicKeys = [ andromeda h610 ];
 }
