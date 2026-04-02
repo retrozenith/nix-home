@@ -5,6 +5,12 @@ in
 {
   imports = lib.optional (builtins.pathExists hardwareConfig) hardwareConfig;
 
+  fileSystems."/mnt/HDD" =
+    { device = "/dev/disk/by-uuid/f695f143-79be-44bc-917d-7f549deb0964";
+      fsType = "ext4";
+      options = ["nofail"];
+    };
+
   nix.settings = {
     experimental-features = [ "nix-command" "flakes" ];
     auto-optimise-store = true;
