@@ -81,6 +81,7 @@ in
     vscode.fhs
     git
     gparted
+    google-chrome
   ] ++ lib.optionals (pkgs ? lon) [
     lon
   ];
