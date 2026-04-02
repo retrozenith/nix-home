@@ -82,6 +82,7 @@ in
     git
     gparted
     google-chrome
+    go
   ] ++ lib.optionals (pkgs ? lon) [
     lon
   ];
