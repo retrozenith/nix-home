@@ -79,6 +79,7 @@ in
   environment.systemPackages = with pkgs; [
     sbctl
     vscode.fhs
+    antigravity-fhs
     git
     gparted
     google-chrome
